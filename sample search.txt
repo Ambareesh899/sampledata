@@ -1,0 +1,68 @@
+App.js
+======
+import React from "react";
+import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
+import {
+  PagingInfo,
+  ResultsPerPage,
+  Paging,
+  Facet,
+  SearchProvider,
+  Results,
+  SearchBox,
+  Sorting
+} from "@elastic/react-search-ui";
+import { Layout } from "@elastic/react-search-ui-views";
+import "@elastic/react-search-ui-views/lib/styles/styles.css";
+
+
+const connector = new AppSearchAPIConnector({
+  searchKey: "search-feodmjyfmqinygyb4u1y254k",
+  engineName: "video-games",
+  hostIdentifier: "host-2376rb"
+});
+
+const configurationOptions = {
+  apiConnector: connector,
+  autocompleteQuery: {
+    suggestions: {
+      types: {
+        documents: {
+          // Which fields to search for suggestions.
+          fields: ["name"]
+        }
+      },
+      // How many suggestions appear.
+      size: 5
+    }
+  },
+  searchQuery: {
+    search_fields: {
+      // 1. Search by name of video game.
+      name: {}
+    },
+    
+  }
+};
+
+export default function App() {
+  return (
+    <SearchProvider config={configurationOptions}>
+      <div className="App">
+          <SearchBox autocompleteSuggestions={true} />
+       
+        
+      </div>
+    </SearchProvider>
+  );
+}
+=====
+index.js
+=====
+import React from "react";
+import ReactDOM from "react-dom";
+
+import App from "./App";
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
